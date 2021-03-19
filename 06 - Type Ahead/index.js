@@ -10,20 +10,20 @@ fetch(endpoint) // fetch returns a promise
   .then((data) => cities.push(...data)); // spread data into the cities array
 
 function findMatches(wordToMatch, cities) {
+  const regex = new RegExp(wordToMatch, "gi"); //g - global, i - case insensitive
   return cities.filter((place) => {
-    const regex = new RegExp(wordToMatch, "gi"); //g - global, i - case insensitive
     return place.city.match(regex) || place.state.match(regex);
   });
 }
 
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 function displayMatches() {
   const matchArray = findMatches(this.value, cities);
-  const html = matchArray
+  const regex = new RegExp(this.value, "gi");
+  let html = matchArray
     .map((place) => {
-      const regex = new RegExp(this.value, "gi");
       const cityName = place.city.replace(
         regex,
         `<span class="hl">${this.value}</span>`
@@ -32,15 +32,18 @@ function displayMatches() {
         regex,
         `<span class="hl">${this.value}</span>`
       );
-      const formattedPopulation = numberWithCommas(place.population);
       return `
     <li>
     <span class="name">${cityName}, ${stateName}</span>
-    <span class="population">${formattedPopulation}</span>
+    <span class="population">${numberWithCommas(place.population)}</span>
     </li>
     `;
     })
     .join("");
+  if (this.value === "") {
+    html = `<li>Filter for a city</li>
+          <li>or a state</li>`;
+  }
   suggestions.innerHTML = html;
 }
 
