@@ -17,13 +17,15 @@ let direction = true;
 function draw(e) {
   if (!isDrawing) return; // stop the function from running when it is not moused down
   console.log(e, hue);
+  // Update line colour as hue increments
   ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(e.offsetX, e.offsetY);
   ctx.stroke();
 
-  // set lastX + Y so that line connects to that point
+  // update lastX + Y as mouse moves so current and previous cursor points are connected
+  // Without this each point would connect to the one that the line started from
   [lastX, lastY] = [e.offsetX, e.offsetY];
 
   // Change hue as cursor moves
@@ -31,7 +33,6 @@ function draw(e) {
   if (hue >= 360) {
     hue = 0;
   }
-
 
   // Increase and decrase line size as cursor moves
   if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
@@ -46,7 +47,8 @@ function draw(e) {
 
 canvas.addEventListener("mousedown", (e) => {
   isDrawing = true;
-  //set last X + Y so that line starts from that point
+  //set last X + Y so that line starts from the point of mousedown
+  //Without this the line with always connect to the point the previous line ended
   [lastX, lastY] = [e.offsetX, e.offsetY];
 });
 canvas.addEventListener("mousemove", draw);
