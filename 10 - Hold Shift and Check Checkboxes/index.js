@@ -16,7 +16,12 @@ function handleCheck(e) {
       }
     });
   }
-  lastChecked = this;
+
+  if (!this.checked) {
+    lastChecked = null;
+  } else {
+    lastChecked = this;
+  }
 }
 
 checkboxes.forEach((box) => {
