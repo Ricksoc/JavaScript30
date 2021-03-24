@@ -6,8 +6,8 @@ const video = player.querySelector(".viewer");
 const progress = player.querySelector(".progress");
 const progressBar = player.querySelector(".progress-filled");
 const toggle = player.querySelector(".toggle");
-const skipButtons = player.querySelector("[data-skip]");
-const ranges = player.querySelector(".player__slider");
+const skipButtons = player.querySelectorAll("[data-skip]");
+const ranges = player.querySelectorAll(".player__slider");
 
 /* Build Functions */
 function togglePlay() {
@@ -19,8 +19,12 @@ function togglePlay() {
 }
 
 function updateButton() {
-  const icon = video.paused ? "▶️" : "⏸️";
+  const icon = this.paused ? "▶️" : "⏸️";
   toggle.textContent = icon;
+}
+
+function timeSkip() {
+  video.currentTime += parseFloat(this.dataset.skip);
 }
 
 /* Connect event listners */
@@ -43,3 +47,11 @@ toggle.addEventListener("keyup", (e) => {
     console.log("toggle");
   }
 });
+
+skipButtons.forEach((skip) => skip.addEventListener("click", timeSkip));
+
+ranges.forEach((slider) =>
+  slider.addEventListener("click", (e) => {
+    console.log(e.target);
+  })
+);
