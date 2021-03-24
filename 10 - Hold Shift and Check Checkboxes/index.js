@@ -17,10 +17,20 @@ function handleCheck(e) {
     });
   }
 
-  if (!this.checked) {
-    lastChecked = null;
-  } else {
+  //If action was to check a box update lastChecked
+  if (this.checked) {
     lastChecked = this;
+  }
+
+  // Check if no boxes are checked and if so nullify lastChecked
+  let unchecked = 0;
+  checkboxes.forEach((box) => {
+    if (box.checked == false) {
+      unchecked++;
+    }
+  });
+  if (unchecked == checkboxes.length) {
+    lastChecked = null;
   }
 }
 
