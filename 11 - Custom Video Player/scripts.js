@@ -78,3 +78,13 @@ skipButtons.forEach((skip) => skip.addEventListener("click", timeSkip));
 ranges.forEach((slider) =>
   slider.addEventListener("change", handleRangeUpdate)
 );
+
+// function enterFullScreen(){
+//   if(!video.webkitDisplayingFullscreen){
+//       video.webkitRequestFullScreen();
+//   }else{
+//       document.webkitExitFullscreen();
+//   }
+// }
+
+// fullScreen.addEventListener('click', enterFullScreen);
