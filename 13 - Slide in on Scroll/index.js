@@ -1,7 +1,5 @@
 //jshint esversion: 8
 
-const images = document.querySelectorAll("images");
-
 /* debounce function allows you to reduce the frequency with which 
 the internal function runs -> debouce will run all the time, e.g. 
 on "scroll", internal function will only run every n milliseconds
@@ -25,7 +23,28 @@ function debounce(func, wait = 20, immediate = true) {
 const sliderImages = document.querySelectorAll(".slide-in");
 
 function checkSlide(e) {
-  console.log(e);
+  sliderImages.forEach((sliderImage) => {
+    /*
+    get pixel level for bottom of current view then 
+    offset by half the height for each image
+    */
+    const slideInAt =
+      window.scrollY + window.innerHeight - sliderImage.height / 2;
+
+    //bottom of the image
+    const imageBottom = sliderImage.offsetTop + sliderImage.height;
+    const isHalfShown = slideInAt > sliderImage.offsetTop;
+    const isNotScrolledPast = window.scrollY < imageBottom;
+    // console.log(slideInAt);
+
+    if (isHalfShown && isNotScrolledPast) {
+      sliderImage.classList.add("active");
+      // console.log("shown");
+    } else {
+      sliderImage.classList.remove("active");
+      // console.log("not shown");
+    }
+  });
 }
 
-window.addEventListener("scroll", checkSlide);
+window.addEventListener("scroll", debounce(checkSlide));
