@@ -3,6 +3,9 @@
 const addItems = document.querySelector(".add-items");
 const itemsList = document.querySelector(".plates");
 const items = JSON.parse(localStorage.getItem("items")) || [];
+const btnClear = document.querySelector("#clear");
+const btnCheck = document.querySelector("#check");
+const btnUncheck = document.querySelector("#uncheck");
 
 function addItem(e) {
   // by default submitting a form refreshes the page
@@ -13,12 +16,12 @@ function addItem(e) {
     done: false,
   };
   items.push(item);
-  populateList(items, itemsList);
+  populateList(itemsList, items);
   localStorage.setItem("items", JSON.stringify(items));
   this.reset(); // resest form
 }
 
-function populateList(plates = [], platesList) {
+function populateList(platesList, plates = []) {
   platesList.innerHTML = plates
     .map((plate, i) => {
       return `
@@ -39,7 +42,7 @@ function toggleDone(e) {
   const index = el.dataset.index;
   items[index].done = !items[index].done;
   localStorage.setItem("items", JSON.stringify(items));
-  populateList(items, itemsList);
+  populateList(itemsList, items);
 }
 
 addItems.addEventListener("submit", addItem);
@@ -47,6 +50,27 @@ addItems.addEventListener("submit", addItem);
 // this is called event delegation
 itemsList.addEventListener("click", toggleDone);
 
+btnClear.addEventListener("click", () => {
+  localStorage.clear();
+  location.reload();
+});
+
+btnCheck.addEventListener("click", () => {
+  items.forEach((element) => {
+    element.done = true;
+    location.reload();
+  });
+  localStorage.setItem("items", JSON.stringify(items));
+});
+
+btnUncheck.addEventListener("click", () => {
+  items.forEach((element) => {
+    element.done = false;
+    location.reload();
+  });
+  localStorage.setItem("items", JSON.stringify(items));
+});
+
 setTimeout(() => {
-  populateList(items, itemsList);
-}, 200);
+    populateList(itemsList, items);
+}, 0);
