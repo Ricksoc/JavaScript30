@@ -58,17 +58,17 @@ btnClear.addEventListener("click", () => {
 btnCheck.addEventListener("click", () => {
   items.forEach((element) => {
     element.done = true;
-    location.reload();
-  });
-  localStorage.setItem("items", JSON.stringify(items));
+});
+localStorage.setItem("items", JSON.stringify(items));
+location.reload();
 });
 
 btnUncheck.addEventListener("click", () => {
   items.forEach((element) => {
     element.done = false;
-    location.reload();
-  });
-  localStorage.setItem("items", JSON.stringify(items));
+});
+localStorage.setItem("items", JSON.stringify(items));
+location.reload();
 });
 
 setTimeout(() => {
