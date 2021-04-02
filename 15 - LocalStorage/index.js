@@ -46,6 +46,7 @@ function toggleDone(e) {
 }
 
 addItems.addEventListener("submit", addItem);
+
 // add event listener to the <ul> which is always present nomatter how many list items
 // this is called event delegation
 itemsList.addEventListener("click", toggleDone);
