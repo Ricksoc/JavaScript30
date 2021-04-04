@@ -2,7 +2,7 @@
 
 const hero = document.querySelector(".hero");
 const text = hero.querySelector("h1");
-const walk = 300; // 100px
+const walk = 300; // px
 
 function shadow(e) {
   // es6 destructuring approach
